@@ -1,0 +1,21 @@
+sudo: required
+services:
+  - docker
+
+before_install:
+  - docker build -t awakenedmind/react-test -f ./client/Dockerfile.dev ./client
+
+script: # Run Jest test
+  - docker run -e CI=true awakenedmind/react-test npm test 
+
+after_success:
+  - docker build -t awakenedmind/multi-client ./client
+  - docker build -t awakenedmind/multi-nginx ./nginx
+  - docker build -t awakenedmind/multi-server ./server
+  - docker build -t awakenedmind/multi-worker ./worker
+
+  echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+  - docker push awakenedmind/multi-client
+  - docker push awakenedmind/multi-nginx
+  - docker push awakenedmind/multi-server
+  - docker push awakenedmind/multi-worker
