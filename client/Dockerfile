@@ -15,6 +15,6 @@ FROM nginx
 # Expose the port 3000 (ReactJS)
 EXPOSE 3000
 # Overwrite nginx's default.conf for routing
-COPY --from=builder ./nginx/default.conf /etc/nginx/conf.d/default.conf
+COPY ./nginx/default.conf /etc/nginx/conf.d/default.conf
 # copy artifacts to nginx
 COPY --from=builder /app/build /usr/share/nginx/html
