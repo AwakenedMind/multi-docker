@@ -5,7 +5,7 @@ services:
 before_install:
   - docker build -t awakenedmind/react-test -f ./client/Dockerfile.dev ./client
 
-script: # Run Jest test
+script: 
   - docker run -e CI=true awakenedmind/react-test npm test 
 
 after_success:
@@ -19,3 +19,5 @@ after_success:
   - docker push awakenedmind/multi-nginx
   - docker push awakenedmind/multi-server
   - docker push awakenedmind/multi-worker
+
+      
