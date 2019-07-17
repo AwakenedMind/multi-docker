@@ -18,5 +18,18 @@ after_success:
   - docker push awakenedmind/multi-nginx
   - docker push awakenedmind/multi-server
   - docker push awakenedmind/multi-worker
-
+  
+deploy:
+  provider: elasticbeanstalk
+  region: us-west-2
+  app: docke-react
+  env: multi-docker
+  bucket_name: elasticbeanstalk-us-west-2-208624173923
+  bucket_path: docker-multi
+  on: 
+    branch: master
+  access_key_id:
+    secure: $AWS_ACCESS_KEY
+  secret_access_key:
+    secure: $AWS_SECRET_KEY
       
